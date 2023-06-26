@@ -20,7 +20,7 @@
 
 ## AI相关调研列表
 
-| 名称      | 开源地址  | 分类         | 描述                                        | 状态      |
+| 名称      |  项目地址  | 分类         | 描述                                        | 状态      |
 |-----------|-----------|------------|-------------------------------------------|-----------|
 | ChatGPT-CodeReview | <https://github.com/anc95/ChatGPT-CodeReview> | 工具-研发效率提升 | 借助ChatGPT能力，实现自动的代码review，提升代码质量、降低代码维护成本   | [kubebb/core项目验证中](https://github.com/kubebb/core/pull/63) |
 | WhatTheDiff | <https://whatthediff.ai/> | 工具-研发效率提升 | 代码自动review(收费)  | 验证中 |
