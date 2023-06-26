@@ -30,8 +30,6 @@
 | langchain-ChatGLM | <https://github.com/imClumsyPanda/langchain-ChatGLM> | 应用-本地知识库问答 | 基于本地知识库的 ChatGLM 问答，可实现**全部使用开源模型离线私有部署** | 调研中 |
 | LangChain-ChatGLM-Webui | <https://github.com/thomas-yanxin/LangChain-ChatGLM-Webui> | 应用-本地知识库问答 | 类似  langchain-ChatGLM                                      | 调研中 |
 | HuggingFace transformers | <https://huggingface.co/> | AI平台 |  提供了数以千计的预训练模型，支持 100 多种语言的文本分类、信息抽取、问答、摘要、翻译、文本生成。它的宗旨是让最先进的 NLP 技术人人易用。  | 调研中 |
-| HuggingFace transformers | <https://huggingface.co/> | AI平台 |  提供了数以千计的预训练模型，支持 100 多种语言的文本分类、信息抽取、问答、摘要、翻译、文本生成。它的宗旨是让最先进的 NLP 技术人人易用。  | 调研中 |
-| DB-GPT | <https://huggingface.co/> | AI平台 |  提供了数以千计的预训练模型，支持 100 多种语言的文本分类、信息抽取、问答、摘要、翻译、文本生成。它的宗旨是让最先进的 NLP 技术人人易用。  | 调研中 |
 | DB-GPT | <https://github.com/csunny/DB-GPT> | AI平台 |  通过私有化LLM技术定义数据库下一代交互方式,支持SQL生成诊断、私域问答、向量存储以及多种大于元模型  | 调研中 |
 | PrivateGPT | <https://github.com/imartinez/privateGPT> | AI平台 | 基于LLMs模型能力，实现本地文档(私人数据)智能化，100%私有，无数据泄露  | 调研中 |
 | Langchain | <https://huggingface.co/> | AI开发框架 | 提供AI应用开发框架，支持多种AI服务(OpenAI/Google),多种文档数据源，提供Python/Typescript/Golang/Rust等多种语言实现 | [调研中](https://github.com/bjwswang/assistant) |
