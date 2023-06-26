@@ -1,9 +1,11 @@
 # 常用网站
 - https://chat.lmsys.org/ AI 模型的 benchmarks🏆 
 
-# 基础名词解释[^source1]
+# 基础名词解释[^source1][^source2][^source3]
 
 [^source1]:https://aigc.phodal.com/6-llm-glossary.html
+[^source2]:https://zhuanlan.zhihu.com/p/615074572
+[^source3]:https://pub.towardsai.net/tokens-and-models-understanding-langchain-%EF%B8%8F-part-3-e471aececf19
 
 ## LLM
 LLM（Large Language Model，大规模语言模型）是基于深度学习技术构建的人工智能模型，由具有数以亿计参数的人工神经网络组成，通过自监督学习或半监督学习在大量无标签文本上进行训练。
@@ -30,6 +32,10 @@ Token 是指在自然语言处理和文本处理任务中，将文本分解成�
 
 分割文本成 Token 有助于进行文本处理和分析，例如词频统计、语言模型训练、机器翻译、文本分类等任务。将文本分解成 Token 的过程可以提供更细粒度的语义信息，并为模型理解和处理文本提供基础。
 
+Token 涉及到计费以及能生成多少返回。OpenAI的模型参数中有一项名为 MAX TOKENS，它限制了在一个请求中可以产生的 tokens 数量。MAX TOKENS 的限制包括 Prompt 和完成两个方面。这意味着，如果你的 Prompt 是 1000 个 token，你最多只能生成 3000 个 token 的完成文本。第二，MAX TOKENS的限制是由 OpenAI 的服务器执行的。如果你试图生成超过限制的文本，你的请求将被拒绝。
+
+一般经验是 100 token = 75 英文单词，openai 提供了准确的测量网页：https://platform.openai.com/tokenizer 编程中，使用 https://github.com/openai/tiktoken 库
+
 ## LoRA
 LoRA（Low-Rank Adaptation of LLM，即插件式的微调）用于对大语言模型进行个性化和特定任务的定制。LoRA 通过将模型的权重矩阵分解为低秩的近似矩阵，降低了参数空间的复杂性，从而减少了微调的计算成本和模型存储需求。
 
@@ -45,4 +51,33 @@ LoRA（Low-Rank Adaptation of LLM，即插件式的微调）用于对大语言�
 
 数据蒸馏技术在深度学习领域中被广泛应用，特别是在模型压缩和模型部署方面。它可以帮助将复杂的模型转化为更轻量级的模型，并能够促进模型的迁移学习和模型集成，提高模型的鲁棒性和泛化能力。
 
+## 模型中的 175B、60B、540B 等
 
+这些一般指参数的个数，B 是 Billion / 十亿的意思，175B 是 1750 亿参数，这是 ChatGPT 大约的参数规模。
+
+## 强化学习
+（Reinforcement Learning）一种机器学习的方法，通过从外部获得激励来校正学习方向从而获得一种自适应的学习能力。
+
+## 基于人工反馈的强化学习（RLHF）
+
+（Reinforcement Learning from Human Feedback）构建人类反馈数据集，训练一个激励模型，模仿人类偏好对结果打分，这是 GPT-3 后时代大语言模型越来越像人类对话核心技术。
+
+## 涌现
+
+（Emergence）或称创发、突现、呈展、演生，是一种现象。许多小实体相互作用后产生了大实体，而这个大实体展现了组成它的小实体所不具有的特性。研究发现，模型规模达到一定阈值以上后，会在多步算术、大学考试、单词释义等场景的准确性显著提升，称为涌现。
+
+## 泛化
+
+（Generalization）模型泛化是指一些模型可以应用（泛化）到其他场景，通常为采用迁移学习、微调等手段实现泛化。
+
+## 微调
+
+（FineTuning）针对大量数据训练出来的预训练模型，后期采用业务相关数据进一步训练原先模型的相关部分，得到准确度更高的模型，或者更好的泛化。
+
+## 指令微调
+
+（Instruction FineTuning），针对已经存在的预训练模型，给出额外的指令或者标注数据集来提升模型的性能。
+
+## 思维链
+
+（Chain-of-Thought，CoT）。通过让大语言模型（LLM）将一个问题拆解为多个步骤，一步一步分析，逐步得出正确答案。需指出，针对复杂问题，LLM 直接给出错误答案的概率比较高。思维链可以看成是一种指令微调。
