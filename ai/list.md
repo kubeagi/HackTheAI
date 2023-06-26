@@ -23,6 +23,7 @@
 | 名称      | 开源地址  | 分类         | 描述                                        | 状态      |
 |-----------|-----------|------------|-------------------------------------------|-----------|
 | ChatGPT-CodeReview | <https://github.com/anc95/ChatGPT-CodeReview> | 工具-研发效率提升 | 借助ChatGPT能力，实现自动的代码review，提升代码质量、降低代码维护成本   | [kubebb/core项目验证中](https://github.com/kubebb/core/pull/63) |
+| WhatTheDiff | <https://whatthediff.ai/> | 工具-研发效率提升 | 代码自动review(收费)  | 验证中 |
 | Copilot | <https://github.com/features/copilot>| 工具-研发效率提升 | 提供AI辅助编程   | 验证中 |
 | Codeium | <https://codeium.com/> | 工具-研发效率提升 | 提供AI辅助编程，包括代码优化、文档编写、单测生成等能力   | 使用中 |
 | Claude | <https://www.anthropic.com/product> | 工具-研发效率提升 | 会话式AI助手，支持Slack以及API使用模式   | 使用中(Slack机器人) |
