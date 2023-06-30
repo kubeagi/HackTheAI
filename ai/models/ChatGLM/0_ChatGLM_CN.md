@@ -31,6 +31,7 @@ langchain+ChatGLM 实现本地知识库：
 
 -   介绍：[ChatGLM-6B 结合 langchain 实现本地知识库 QA Bot - Heywhale.com](https://www.heywhale.com/mw/project/643977aa446c45f4592a1e59)
 
+
 引入网络查询：[THUDM/WebGLM: WebGLM: An Efficient Web-enhanced Question Answering System (KDD 2023) (github.com)](https://github.com/THUDM/WebGLM)
 
 引入图像识别：[THUDM/VisualGLM-6B: Chinese and English multimodal conversational language model | 多模态中英双语对话语言模型 (github.com)](https://github.com/THUDM/VisualGLM-6B)
