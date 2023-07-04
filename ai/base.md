@@ -1,6 +1,8 @@
 # 常用网站
 
-- <https://chat.lmsys.org/> AI 模型的 benchmarks🏆
+- <https://chat.lmsys.org/> AI 模型的 benchmarks 🏆
+- <https://huggingface.co/spaces/mteb/leaderboard> Massive Text Embedding Benchmark 大规模文本嵌入基准（MTEB）排行榜 🏆 缺点是基本只测试了英语，github star 🌟 400+
+
 
 # 基础名词解释[^source1][^source2][^source3]
 
@@ -47,6 +49,8 @@ Token 涉及到计费以及能生成多少返回。OpenAI的模型参数中有�
 LoRA（Low-Rank Adaptation of LLM，即插件式的微调）用于对大语言模型进行个性化和特定任务的定制。LoRA 通过将模型的权重矩阵分解为低秩的近似矩阵，降低了参数空间的复杂性，从而减少了微调的计算成本和模型存储需求。
 
 传统的微调方法通常需要在整个模型上进行参数优化，这可能会导致训练时间长、计算资源消耗大，并且需要大量的标注数据。而低秩适应方法则提供了一种更高效的微调策略，基于对原始模型的分析，选择性地微调模型的某些部分，使其更适应于特定的任务或数据。
+
+huggingface 写过一篇很好的博客，提供官方中文版：https://huggingface.co/blog/zh/lora
 
 ## 矢量数据库
 
