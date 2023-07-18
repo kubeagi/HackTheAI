@@ -40,4 +40,170 @@ C++ 轻量化版本：[MegEngine/InferLLM: a lightweight LLM model inference fra
 
 ## 测试记录
 
-TBD
+1.   fastchat 运行模型，打包为 openai api server
+
+使用 Fastchat 构建基于 Chat2GLM-6B 的 OpenAI API Server:
+
+```dockerfile
+RUN python3 -m fastchat.serve.controller
+RUN python3 -m fastchat.serve.model_worker --model-path ~/bjwswang/ai-modesl/chatglm-6b --host 0.0.0.0
+RUN python3 -m fastchat.serve.openai_api_server --host 0.0.0.0
+```
+
+启动后，使用 curl 输入如下指令测试：
+
+```bash
+curl http://localhost:8000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "chatglm-6b",
+    "messages": [{"role": "user", "content": "Hello! What is your name?"}]
+  }'
+```
+
+得到回复：
+
+```json
+{"id":"chatcmpl-3kUj7X4byD38b4Bp73o84N",
+"object":"chat.completion",
+"created":1689316550,
+"model":"chatglm-6b",
+"choices":
+	[{"index":0,
+	"message":{
+		"role":"assistant",
+		"content":"Hello! I am ChatGLM2-6B, a language model jointly trained by KEG Lab of Tsinghua University and Zhipu AI Company."
+		},
+	"finish_reason":"stop"
+	}],
+"usage":{
+	"prompt_tokens":21,
+	"total_tokens":56,
+	"completion_tokens":35
+	}
+}
+```
+
+2.   设置 host，使用 gradio 应用进行调试：
+
+```python
+import gradio as gr
+import openai
+from gradio.components import Textbox
+
+openai.api_key = "EMPTY"
+openai.api_base = "http://fastchat.ai.com/v1"
+
+model = "chatglm-6b"
+
+
+def GLM_Bot(input):
+    if input:
+        response = openai.Completion.create(model=model, prompt=input, max_tokens=128)
+        result = response.choices[0].text
+        return input + result
+
+
+inputs = Textbox(lines=7, label="请输入补全提示词")
+outputs = Textbox(label="GLM 生成结果")
+
+demo = gr.Interface(fn=GLM_Bot, inputs=inputs, outputs=outputs, title="GLM Demo",
+                    description="以下是基于 ChatGLM2-6B 模型，在 FastChat 上构建 openai api server 的补全调用演示",
+                    theme="Default")
+
+demo.launch(share=True)
+```
+
+结果如下：
+
+![api_test_01](..\..\..\images\api_test_01.jpg)
+
+3.   与 Langchain 对接（基于 `..\..\vectorstores\ask.py` ）
+
+Fastchat 与 Langchain 的对接通过在 `model_name` 中伪装成 OpenAI 模型的方法实现：
+
+替换构建过程的第二步为：
+
+```
+python3 -m fastchat.serve.model_worker --model-names "gpt-3.5-turbo,text-davinci-003,text-embedding-ada-002" --model-path ~/bjwswang/ai-modesl/chatglm-6b --host 0.0.0.0
+```
+
+注意，上述命令使文本处理、特征化及 LLM 推理都使用同一模型。实际应用中可同时运行并注册其他特征化模型，如 `text2vec` 等。
+
+测试文本为一篇拜登总统的演讲稿：（`https://raw.githubusercontent.com/hwchase17/langchain/v0.0.200/docs/modules/state_of_the_union.txt`）
+
+通过修改过的 `ask.py` 处理该演讲稿，并询问问题：
+
+```python
+from langchain.vectorstores import Chroma
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.llms import OpenAI
+from langchain.chains import RetrievalQA
+from langchain.document_loaders import TextLoader
+from typing import List
+from langchain.schema import Document
+import os
+
+# 替换 Openai API 为本地部署的伪装实例
+os.environ['OPENAI_API_KEY'] = "EMPTY"
+os.environ['OPENAI_API_BASE'] = "http://fastchat.ai.com/v1"
+
+
+class Genie:
+
+    def __init__(self, file_path: str):
+        # 数据文件
+        self.file_path = file_path
+        self.loader = TextLoader(self.file_path, encoding='utf-8')
+        # 通过loader变成[Document]
+        self.documents = self.loader.load()
+        # 将[Document]切割成更小的
+        self.texts = self.text_split(self.documents)
+        self.vectordb = self.embeddings(self.texts)
+        self.genie = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff",
+                                                 retriever=self.vectordb.as_retriever())
+
+    @staticmethod
+    def text_split(documents: TextLoader):
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+        texts = text_splitter.split_documents(documents)
+        return texts
+
+    @staticmethod
+    def embeddings(texts: List[Document]):
+        embeddings = OpenAIEmbeddings()
+        vectordb = Chroma.from_documents(texts, embeddings)
+        return vectordb
+
+    def ask(self, query: str):
+        return self.genie.run(query)
+
+
+if __name__ == "__main__":
+    genie = Genie("./example.txt")
+    print(genie.ask("Who are mentioned in the speech?"))
+
+```
+
+ChatGLM2-6B 回复（运行耗时约 20 秒）：
+
+```
+The speaker mentions the American people, the State of the Union, and various government officials and employees.
+```
+
+评价：相对准确，但回答比较宽泛。
+
+问题 2：
+
+```
+How many projects were announced?
+```
+
+ChatGLM2-6B 回复：
+
+```
+The first project is cutting the cost in half for most families and helping parents return to work. The second project is home and long-term care, more affordable housing, and Pre-K for every 3- and 4-year-old. The third project is ending the shutdown of schools and businesses. So the final answer is three.
+```
+
+评价：出现了【幻觉】，原文中并未原样提及上述几个项目。
