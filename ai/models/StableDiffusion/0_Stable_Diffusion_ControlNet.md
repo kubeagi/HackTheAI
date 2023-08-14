@@ -85,18 +85,18 @@
 - 功能演示：
   - Canny：边缘检测生成
       - 输入图：
-      - ![00077-2185265485](..\..\..\images\00077-2185265485.png)
+      - ![00077-2185265485](../../../images/sd_webui_canny_01.png)
       - Canny 边缘检测预处理器检测结果（模型约 200MB）： 
-      - ![canny 实例](..\..\..\images\canny 实例.png)
+      - ![canny 实例](../../../images/sd_webui_canny_02.png)
       - 生成结果：
-      - ![00059-4213331893](..\..\..\images\00059-4213331893.png)
+      - ![00059-4213331893](../../../images/sd_webui_canny_03.png)
   - Openpose：姿态识别
       - 输入图：
-      - ![00020-1064980522](..\..\..\images\00020-1064980522.png)
+      - ![00020-1064980522](../../../images/sd_webui_openpose_01.png)
       - Openpose 姿态检测预处理器：
-      - ![openpose 记录-生成骨架](..\..\..\images\openpose 记录-生成骨架.png)
+      - ![openpose 记录-生成骨架](../../../images/sd_webui_openpose_02.png)
       - 输出结果：
-      - ![00021-692655398](..\..\..\images\00021-692655398.png)
+      - ![00021-692655398](../../../images/sd_webui_openpose_03.png)
       - 注意：Openpose 对深度和前后遮挡关系的理解并不充分，复杂场景下可能会出现透视错误等问题。
 
 ## TODO：
